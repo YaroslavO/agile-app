@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Agile application</string>
+    <string name="create_sprint_name">Create new Sprint</string>
 </resources>

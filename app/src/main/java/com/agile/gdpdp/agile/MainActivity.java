@@ -1,10 +1,11 @@
 package com.agile.gdpdp.agile;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         createSprintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,
-                        "CreateSprintButton is clicked!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, CreateSprintActivity.class);
+                startActivity(intent);
             }
         });
     }
