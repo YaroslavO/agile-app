@@ -31,14 +31,14 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/startDate"
+                android:id="@+id/startSprintDate"
                 android:layout_weight="1.38"
                 android:hint="Start Date" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/startTime"
+                android:id="@+id/startSprintTime"
                 android:layout_weight="1"
                 android:hint="Start Time" />
         </LinearLayout>
@@ -51,14 +51,14 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/endDate"
+                android:id="@+id/endSprintDate"
                 android:layout_weight="1.38"
                 android:hint="End Date" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/endTime"
+                android:id="@+id/endSprintTime"
                 android:layout_weight="1"
                 android:hint="End Time" />
         </LinearLayout>
