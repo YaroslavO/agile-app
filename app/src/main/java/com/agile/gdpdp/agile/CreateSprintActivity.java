@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.agile.gdpdp.agile.database.DatabaseHelper;
+import com.agile.gdpdp.agile.database.model.Sprint;
 import com.android.datetimepicker.date.DatePickerDialog;
 import com.android.datetimepicker.time.RadialPickerLayout;
 import com.android.datetimepicker.time.TimePickerDialog;
@@ -20,14 +24,18 @@ public class CreateSprintActivity extends AppCompatActivity
 
     private static final String TIME_PATTERN = "HH:mm";
 
+    private EditText nameSprint;
     private EditText startSprintDate;
     private EditText startSprintTime;
     private EditText endSprintDate;
     private EditText endSprintTime;
+    private ImageButton saveSprintButton;
     private Calendar calendar;
     private DateFormat dateFormat;
     private SimpleDateFormat timeFormat;
     private boolean startDate;
+    private Calendar startSprintDateTime = Calendar.getInstance();
+    private Calendar endSprintDateTime = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,28 @@ public class CreateSprintActivity extends AppCompatActivity
 
         setDateListener();
 
+        setSaveSprintButtonListener();
+
         update();
+    }
+
+    private void setSaveSprintButtonListener() {
+        saveSprintButton = (ImageButton) findViewById(R.id.saveSprintButton);
+
+        saveSprintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nameSprint = (EditText) findViewById(R.id.nameSprint);
+                String name = nameSprint.getText().toString();
+
+                Sprint sprint = new Sprint(name, startSprintDateTime, endSprintDateTime);
+                DatabaseHelper db = new DatabaseHelper(CreateSprintActivity.this);
+                db.addSprint(sprint);
+
+                Toast.makeText(getApplicationContext(), "You save sprint " + name, Toast.LENGTH_LONG).show();
+                CreateSprintActivity.this.finish();
+            }
+        });
     }
 
     private void setDateListener() {
@@ -95,9 +124,11 @@ public class CreateSprintActivity extends AppCompatActivity
         if (isStartDate()) {
             startSprintDate.setText(dateFormat.format(calendar.getTime()));
             startSprintTime.setText(timeFormat.format(calendar.getTime()));
+            startSprintDateTime.setTime(calendar.getTime());
         } else {
             endSprintDate.setText(dateFormat.format(calendar.getTime()));
             endSprintTime.setText(timeFormat.format(calendar.getTime()));
+            endSprintDateTime.setTime(calendar.getTime());
         }
     }
 
