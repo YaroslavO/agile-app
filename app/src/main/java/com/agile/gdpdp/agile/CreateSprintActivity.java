@@ -48,11 +48,23 @@ public class CreateSprintActivity extends AppCompatActivity
         dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.getDefault());
 
+        nameSprint = (EditText) findViewById(R.id.nameSprint);
+
         setDateListener();
 
         setSaveSprintButtonListener();
 
-        update();
+        initialDateTime();
+    }
+
+    private void initialDateTime() {
+        startSprintDate.setText(dateFormat.format(calendar.getTime()));
+        startSprintTime.setText(timeFormat.format(calendar.getTime()));
+        startSprintDateTime.setTime(calendar.getTime());
+
+        endSprintDate.setText(dateFormat.format(calendar.getTime()));
+        endSprintTime.setText(timeFormat.format(calendar.getTime()));
+        endSprintDateTime.setTime(calendar.getTime());
     }
 
     private void setSaveSprintButtonListener() {
@@ -61,7 +73,10 @@ public class CreateSprintActivity extends AppCompatActivity
         saveSprintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nameSprint = (EditText) findViewById(R.id.nameSprint);
+                if (!isValidateAllValue()) {
+                    return;
+                }
+
                 String name = nameSprint.getText().toString();
 
                 Sprint sprint = new Sprint(name, startSprintDateTime, endSprintDateTime);
@@ -72,6 +87,25 @@ public class CreateSprintActivity extends AppCompatActivity
                 CreateSprintActivity.this.finish();
             }
         });
+    }
+
+    private boolean isValidateAllValue() {
+        String name = nameSprint.getText().toString();
+
+        if (name.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Name sprint not may be empty!!!", Toast.LENGTH_LONG).show();
+            nameSprint.setFocusable(true);
+
+            return false;
+        }
+
+        if (startSprintDateTime.compareTo(endSprintDateTime) != -1) {
+            Toast.makeText(getApplicationContext(), "Time start sprint must less as time end sprint", Toast.LENGTH_LONG).show();
+
+            return false;
+        }
+
+        return true;
     }
 
     private void setDateListener() {
