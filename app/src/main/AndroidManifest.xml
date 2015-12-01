@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateSprintActivity"
-            android:label="@string/create_sprint_name">
+            android:label="@string/create_sprint_name"
+            android:noHistory="true">
         </activity>
     </application>
 
